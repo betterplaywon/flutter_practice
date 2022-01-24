@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//서버로부터 데이터를 활용하지 않기 때문에 StatelessWidget으로 생성
 class Bottom extends StatelessWidget{
   const Bottom({Key? key}) : super(key: key);
 
