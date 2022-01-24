@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:contact/model/model_movie.dart';
 class HomeScreen extends StatefulWidget{
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -7,6 +7,16 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen>{
+  //movies라는 array 안에 샘플 데이터가 들어온다.
+  List<Movie> movies = [
+  Movie.fromMap(
+  {
+    'title': '예시파일',
+  'keyword': 'string/number',
+    'picture': 'test_movie_1.png',
+    'like': false
+  })
+  ];
   @override
   void initState(){
     super.initState();
