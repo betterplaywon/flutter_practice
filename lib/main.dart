@@ -13,11 +13,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home:Scaffold(
         appBar: AppBar(title: Text('Making App')),
-        body: Center(
-         child: Text('Hi'),
+        body: Align(
+          alignment: Alignment.center,
+          child: Container(
+            width: double.infinity, height:50,
+           margin: EdgeInsets.all(20),
+           decoration: BoxDecoration(
+             color: Colors.blue,
+             border: Border.all(color:Colors.lightBlue)
+
+           ),
+           child: Text('Hi'),
+          ),
         ),
         bottomNavigationBar: BottomAppBar(
-          child:  SizedBox(
+          child:  Container(
             width: 50,
             height:50,
             child: Row(
