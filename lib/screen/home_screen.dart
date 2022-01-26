@@ -13,7 +13,7 @@ class _HomeScreenState extends State<HomeScreen>{
   {
     'title': '예시파일',
   'keyword': 'string/number',
-    'picture': 'test_movie_1.png',
+    'poster': 'test_movie_1.png',
     'like': false
   })
   ];

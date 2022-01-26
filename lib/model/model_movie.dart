@@ -3,13 +3,13 @@
 class Movie {
   final String title;
   final String keyword;
-  final String picture;
+  final String poster;
   final bool like;
 
   Movie.fromMap(Map<String, dynamic> map)
   :title = map['title'],
   keyword = map['keyword'],
-  picture = map['picture'],
+  poster = map['poster'],
   like = map['like'];
 
   @override
