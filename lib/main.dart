@@ -16,40 +16,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
       appBar: AppBar(),
-        body:ListView(
-          children: <Widget>[
-          Container(
-          height: 50,
-          child: Row(
-            children: [
-              Icon(Icons.account_circle),
-              Text('강지원'),
-            ],
-          ),
-        ),
-            Container(
-              height: 50,
-              child: Row(
-                children: [
-                  Icon(Icons.account_circle),
-                  Text('강지원'),
-                ],
+        body:ListView.builder(
+          itemCount: 30,
+        itemBuilder: (context,index){
+          return ListTile(
+            leading: Icon(Icons.account_circle),
+            title: Text('강지원'),
+          );
+        },
               ),
             ),
-            Container(
-              height: 50,
-              child: Row(
-                children: [
-                  Icon(Icons.account_circle),
-                  Text('강지원'),
-                ],
-              ),
-            ),
-      ],
-      ),
-        bottomNavigationBar:bottomBar()
-        ),
-    );
+      );
   }
 }
 
