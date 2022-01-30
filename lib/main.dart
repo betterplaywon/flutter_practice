@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,16 +17,60 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
       appBar: AppBar(),
         body:ListView(
-          children: [
-            Text('aldhasuaudfhda'),
-            Text('aldhasuaudfhda'),
-            Text('aldhasuaudfhda'),
-
-          ],
+          children: <Widget>[
+          Container(
+          height: 50,
+          child: Row(
+            children: [
+              Icon(Icons.account_circle),
+              Text('강지원'),
+            ],
+          ),
         ),
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  Icon(Icons.account_circle),
+                  Text('강지원'),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  Icon(Icons.account_circle),
+                  Text('강지원'),
+                ],
+              ),
+            ),
+      ],
+      ),
+        bottomNavigationBar:bottomBar()
         ),
     );
   }
 }
 
 
+class bottomBar extends StatelessWidget {
+  const bottomBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 35,
+      child: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            Icon(Icons.phone),
+            Icon(Icons.message),
+            Icon(Icons.contact_page)
+          ],
+        ),
+      ),
+    );
+  }
+}
