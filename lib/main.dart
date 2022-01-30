@@ -28,22 +28,28 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        body: SizedBox(
+        body: Container(
+          height: 150,
+         padding: EdgeInsets.all(20),
          child: Row(
           children: [
-            Image.asset('assets/TIL.png',width: 250,),
+            Image.asset('assets/TIL.png',width: 250),
+            Expanded(child:
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Jordan 1 Retro High OG 급처'),
+                Text('오늘의 코딩 연습 교관 구함',style: TextStyle(fontWeight: FontWeight.bold),),
                 Text('신길동, 끌올 10분 전'),
                 Text('600,000원'),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: const [
                     Icon(Icons.favorite),
                     Text('4'),
                   ],
                 ),
               ],
+            ),
             )
           ],
          ),
