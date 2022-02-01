@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 void main() {
   //앱 구동 시작 명령어
-  runApp(MyApp());
+  runApp( MaterialApp(
+      home: MyApp()
+  )
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -15,19 +18,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp>{
   var a = 1;
-  var name = ['강지원','고태준','양진혁'];
+  var name = ['Flutter','React','Interview'];
   var count = [0,0,0];
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         floatingActionButton: FloatingActionButton(
-          child: Text(a.toString()),
-          onPressed: () {
-          setState(() {
-            a++;
-          });
+          onPressed: (){
+            showDialog(context: context, builder: (context){
+              return Dialog(
+                child: TestDialog());
+            });
           },
         ),
       appBar: AppBar(
@@ -37,39 +39,38 @@ class _MyAppState extends State<MyApp>{
           itemCount: 3,
         itemBuilder: (context,i){
           return ListTile(
-            leading: Text(count[i].toString()),
+            leading: Icon(Icons.contact_page),
             title: Text(name[i]),
-            trailing: OutlinedButton(
-              onPressed: (){
-                setState(() {
-                  count[i]++;
-                });
-              },
-              child: Text('COUNT BTN'),
-            ),
-          );
+            );
         },
-              ),
-            ),
+        ),
       );
   }
 }
 
 
-class bottomBar extends StatelessWidget {
-  const bottomBar({Key? key}) : super(key: key);
+class TestDialog extends StatelessWidget {
+  const TestDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 35,
-      child: BottomAppBar(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Contact')
+      ),
+      body: Column(
+        children: <Widget>[
+        TextField(decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Check this number'
+        ),),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
-            Icon(Icons.phone),
-            Icon(Icons.message),
-            Icon(Icons.contact_page)
+          children: [
+            TextButton(onPressed: (){}, child: Text('Cancel')),
+            TextButton(onPressed:(){}, child: Text('OK')),
           ],
         ),
       ),
