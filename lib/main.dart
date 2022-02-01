@@ -24,14 +24,6 @@ class _MyAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            showDialog(context: context, builder: (context){
-              return Dialog(
-                child: TestDialog());
-            });
-          },
-        ),
       appBar: AppBar(
         title: Text('TEST'),
       ),
@@ -44,6 +36,13 @@ class _MyAppState extends State<MyApp>{
             );
         },
         ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          showDialog(context: context, builder: (context){
+            return TestDialog();
+          });
+        },
+      ),
       );
   }
 }
@@ -54,26 +53,18 @@ class TestDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Contact')
-      ),
-      body: Column(
-        children: <Widget>[
-        TextField(decoration: InputDecoration(
+    return AlertDialog(
+      title: Text('Contact', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+      content: TextField(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: 'Check this number'
-        ),),
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: [
-            TextButton(onPressed: (){}, child: Text('Cancel')),
-            TextButton(onPressed:(){}, child: Text('OK')),
-          ],
+          labelText: 'Your Contact'
         ),
       ),
+      actions: <Widget>[
+        TextButton(onPressed: (){}, child: Text('cancel')),
+        TextButton(onPressed: (){}, child: Text('OK')),
+      ],
     );
   }
 }
