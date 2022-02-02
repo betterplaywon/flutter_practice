@@ -17,18 +17,30 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp>{
-  var a = 1;
+  var a = 3;
   var name = ['Flutter','React','Interview'];
   var count = [0,0,0];
 
+  increamentNum() {
+    setState(() {
+      a++;
+    });
+  }
+
+  addName(subject) {
+    setState(() {
+      name.add(subject);
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TEST'),
+        title: Text(a.toString()),
       ),
         body:ListView.builder(
-          itemCount: 3,
+          itemCount: name.length,
         itemBuilder: (context,i){
           return ListTile(
             leading: Icon(Icons.contact_page),
@@ -39,7 +51,7 @@ class _MyAppState extends State<MyApp>{
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           showDialog(context: context, builder: (context){
-            return TestDialog();
+            return TestDialog(a:a, increamentNum:increamentNum, name:name, addName:addName);
           });
         },
       ),
@@ -49,22 +61,29 @@ class _MyAppState extends State<MyApp>{
 
 
 class TestDialog extends StatelessWidget {
-  const TestDialog({Key? key}) : super(key: key);
+  TestDialog({Key? key, this.a, this.increamentNum,this.name, this.addName}) : super(key: key);
+
+  final a;
+  final increamentNum;
+  final inputData = TextEditingController();
+  final name;
+  final addName;
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Contact', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
-      content: TextField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Your Contact'
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.all(20),
+        width: 250,
+        height: 250,
+        child: Column(
+          children: [
+            TextField(controller: inputData),
+            TextButton(onPressed: (){increamentNum();addName(inputData.text);}, child: Text('OK')),
+            TextButton(onPressed: (){Navigator.pop(context);}, child: Text('CANCEL')),
+          ],
         ),
       ),
-      actions: <Widget>[
-        TextButton(onPressed: (){}, child: Text('cancel')),
-        TextButton(onPressed: (){}, child: Text('OK')),
-      ],
     );
   }
 }
