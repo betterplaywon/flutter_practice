@@ -1,6 +1,7 @@
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 void main() {
   //앱 구동 시작 명령어
@@ -19,7 +20,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp>{
   var a = 3;
-  var name = ['Flutter','React','Interview'];
+  var name = [];
   var count = [0,0,0];
 
   increamentNum() {
@@ -38,6 +39,11 @@ class _MyAppState extends State<MyApp>{
     var status = await Permission.contacts.status;
     if (status.isGranted) {
       print('허락됨');
+      var contacts = await ContactsService.getContacts();
+      print(contacts);
+      setState(() {
+        name = contacts;
+      });
     } else if (status.isDenied) {
       print('거절됨');
       Permission.contacts.request();
@@ -57,7 +63,7 @@ class _MyAppState extends State<MyApp>{
         itemBuilder: (context,i){
           return ListTile(
             leading: Icon(Icons.contact_page),
-            title: Text(name[i]),
+            title: Text(name[i].familyName),
             trailing: TextButton(onPressed:(){setState(() {
               name.removeAt;
             });}, child: Text('Delete')),
@@ -67,7 +73,7 @@ class _MyAppState extends State<MyApp>{
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           showDialog(context: context, builder: (context){
-            return TestDialog(a:a, increamentNum:increamentNum, name:name, addName:addName);
+            return TestDialog(a:a, increamentNum:increamentNum, name:name, addName:addName, contacts:contacts);
           });
         },
       ),
@@ -77,13 +83,14 @@ class _MyAppState extends State<MyApp>{
 
 
 class TestDialog extends StatelessWidget {
-  TestDialog({Key? key, this.a, this.increamentNum,this.name, this.addName}) : super(key: key);
+  TestDialog({Key? key, this.a, this.increamentNum,this.name, this.addName,this.contacts}) : super(key: key);
 
   final a;
   final increamentNum;
   final inputData = TextEditingController();
   final name;
   final addName;
+  final contacts;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +102,12 @@ class TestDialog extends StatelessWidget {
         child: Column(
           children: [
             TextField(controller: inputData),
-            TextButton(onPressed: (){increamentNum();addName(inputData.text);Navigator.pop(context);}, child: Text('OK')),
+            TextButton(onPressed: (){increamentNum();addName(inputData.text);
+            var newContacts = contacts;
+            newContacts.givenName = inputData.text; //새로운 연락처 생성
+            ContactsService.addContact(newContacts);// 실제 연락처에 데이터 삽입
+            addName(newContacts);
+            Navigator.pop(context);}, child: Text('OK')),
             TextButton(onPressed: (){Navigator.pop(context);}, child: Text('CANCEL')),
           ],
         ),
