@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   //앱 구동 시작 명령어
@@ -32,12 +33,24 @@ class _MyAppState extends State<MyApp>{
       name.add(subject);
     });
   }
-  
+
+  getPermission() async {
+    var status = await Permission.contacts.status;
+    if (status.isGranted) {
+      print('허락됨');
+    } else if (status.isDenied) {
+      print('거절됨');
+      Permission.contacts.request();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(a.toString()),
+        title: Text(a.toString()),actions: [
+          IconButton(onPressed: (){ getPermission(); },
+          icon: Icon(Icons.contacts))],
       ),
         body:ListView.builder(
           itemCount: name.length,
@@ -45,6 +58,9 @@ class _MyAppState extends State<MyApp>{
           return ListTile(
             leading: Icon(Icons.contact_page),
             title: Text(name[i]),
+            trailing: TextButton(onPressed:(){setState(() {
+              name.removeAt;
+            });}, child: Text('Delete')),
             );
         },
         ),
@@ -79,7 +95,7 @@ class TestDialog extends StatelessWidget {
         child: Column(
           children: [
             TextField(controller: inputData),
-            TextButton(onPressed: (){increamentNum();addName(inputData.text);}, child: Text('OK')),
+            TextButton(onPressed: (){increamentNum();addName(inputData.text);Navigator.pop(context);}, child: Text('OK')),
             TextButton(onPressed: (){Navigator.pop(context);}, child: Text('CANCEL')),
           ],
         ),
