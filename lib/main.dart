@@ -19,15 +19,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp>{
-  var a = 3;
-  var name = [];
-  var count = [0,0,0];
+  List<Contact> name = [];
+  List<int> count = [0,0,0];
 
-  increamentNum() {
-    setState(() {
-      a++;
-    });
-  }
 
   addName(subject) {
     setState(() {
@@ -39,6 +33,7 @@ class _MyAppState extends State<MyApp>{
     var status = await Permission.contacts.status;
     if (status.isGranted) {
       print('허락됨');
+
       var contacts = await ContactsService.getContacts();
       print(contacts);
       setState(() {
@@ -54,7 +49,7 @@ class _MyAppState extends State<MyApp>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(a.toString()),actions: [
+        title: Text(name.length.toString()),actions: [
           IconButton(onPressed: (){ getPermission(); },
           icon: Icon(Icons.contacts))],
       ),
@@ -63,7 +58,9 @@ class _MyAppState extends State<MyApp>{
         itemBuilder: (context,i){
           return ListTile(
             leading: Icon(Icons.contact_page),
-            title: Text(name[i].familyName),
+            title: Text(name[i].familyName ?? '임시 저장'),
+            
+            // 추가한 유저 데이터 삭제 처리 기능 제작 중
             trailing: TextButton(onPressed:(){setState(() {
               name.removeAt;
             });}, child: Text('Delete')),
@@ -73,7 +70,7 @@ class _MyAppState extends State<MyApp>{
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           showDialog(context: context, builder: (context){
-            return TestDialog(a:a, increamentNum:increamentNum, name:name, addName:addName, contacts:contacts);
+            return TestDialog(name:name, addName:addName,);
           });
         },
       ),
@@ -83,10 +80,8 @@ class _MyAppState extends State<MyApp>{
 
 
 class TestDialog extends StatelessWidget {
-  TestDialog({Key? key, this.a, this.increamentNum,this.name, this.addName,this.contacts}) : super(key: key);
+  TestDialog({Key? key, this.name, this.addName,this.contacts}) : super(key: key);
 
-  final a;
-  final increamentNum;
   final inputData = TextEditingController();
   final name;
   final addName;
@@ -102,12 +97,14 @@ class TestDialog extends StatelessWidget {
         child: Column(
           children: [
             TextField(controller: inputData),
-            TextButton(onPressed: (){increamentNum();addName(inputData.text);
-            var newContacts = contacts;
-            newContacts.givenName = inputData.text; //새로운 연락처 생성
-            ContactsService.addContact(newContacts);// 실제 연락처에 데이터 삽입
-            addName(newContacts);
-            Navigator.pop(context);}, child: Text('OK')),
+            TextButton(onPressed: (){
+            var plusPerson = Contact();
+            plusPerson.familyName = inputData.text;
+            ContactsService.addContact(plusPerson);
+            addName(inputData.text);
+            Navigator.pop(context);},
+                child: Text('OK')),
+
             TextButton(onPressed: (){Navigator.pop(context);}, child: Text('CANCEL')),
           ],
         ),
