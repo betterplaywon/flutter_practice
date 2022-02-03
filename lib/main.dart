@@ -78,7 +78,6 @@ class _MyAppState extends State<MyApp>{
   }
 }
 
-
 class TestDialog extends StatelessWidget {
   TestDialog({Key? key, this.name, this.addName,this.contacts}) : super(key: key);
 
